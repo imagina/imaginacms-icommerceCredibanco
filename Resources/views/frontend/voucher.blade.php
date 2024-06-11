@@ -53,12 +53,26 @@
 
                     <tr>
                         <td>Fecha:</td>
-                        <td>{{format_date($data->order->created_at,"%d-%m-%Y")}}</td>
+                        @php
+                            $newDate = format_date($data->order->created_at,"%d-%m-%Y");
+                            if(is_null($newDate)){
+                                $date = date_create($data->order->created_at);
+                                $newDate= date_format($date, 'd-m-Y');
+                            }
+                        @endphp
+                        <td>{{$newDate}}</td>
                     </tr>
 
                     <tr>
                         <td>Hora:</td>
-                        <td>{{format_date($data->order->created_at,"%r")}}</td>
+                        @php
+                            $newHour = format_date($data->order->created_at,"%r");
+                            if(is_null($newHour)){
+                                $date = date_create($data->order->created_at);
+                                $newHour = date_format($date, 'H:i:s');
+                            }
+                        @endphp
+                        <td>{{$newHour}}</td>
                     </tr>
 
                     <tr>
@@ -128,22 +142,18 @@
                 </tbody>
               
             </table>
-            
-            
-                @if(isset($currentUser))
-                    @if (!empty($data->order))
+                
+                @if (!empty($data->order))
                     <div class="text-center">
-                        <a href="{{route(locale().'.icommerce.orders.show',[$data->order->id])}}" class="btn btn-primary">Ver Orden</a>
+                        <a href="{{$data->orderUrl}}" class="btn btn-primary">Ver Orden</a>
                     </div>
-                    @endif
-                @else
-                    @if (!empty($data->order))
-                        <a href="{{route(locale().'.icommerce.order.showorder',[$order->id, $order->key])}}" class="btn btn-primary">Ver Orden</a>
-                    @endif
                 @endif
-
+                
                 <div class="text-center my-2">
+                    <a href="{{url('')}}" class="btn btn-primary">Home</a>
+                    {{--
                     <a href="{{route('homepage')}}" class="btn btn-primary">Home</a>
+                    --}}
                 </div>
 
             </div>
