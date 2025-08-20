@@ -38,10 +38,10 @@
                     </tr>
                     --}}
 
-                    <tr>
-                        <td>Cod Unico del Comercio:</td>
-                        <td>{{$data->paymentMethod->options->merchantId}}</td>
-                    </tr>
+{{--                    <tr>--}}
+{{--                        <td>Cod Unico del Comercio:</td>--}}
+{{--                        <td>{{$data->paymentMethod->options->merchantId}}</td>--}}
+{{--                    </tr>--}}
 
                     <tr>
                         <td>Estado de la transacción:</td>
@@ -82,20 +82,24 @@
 
                     @isset($data->dataCredibanco->cardAuthInfo)
 
+                        @isset($data->dataCredibanco->cardAuthInfo->approvalCode)
                         <tr>
                             <td>Nro de Autorización:</td>
                             <td>{{$data->dataCredibanco->cardAuthInfo->approvalCode}}</td>
                         </tr>
-
+                        @endisset
+                        @isset($data->dataCredibanco->cardAuthInfo->paymentSystem)
                         <tr>
                             <td>Franquicia:</td>
                             <td>{{$data->dataCredibanco->cardAuthInfo->paymentSystem}}</td>
                         </tr>
-
+                        @endisset
+                        @isset($data->dataCredibanco->cardAuthInfo->pan)
                         <tr>
                             <td>Tarjeta:</td>
                             <td>{{icommercecredibanco_formatCardNumber($data->dataCredibanco->cardAuthInfo->pan)}}</td>
                         </tr>
+                        @endisset
 
                     @endisset
 
